@@ -18,12 +18,14 @@ app.get('/', function(req, res) {
 
 app.post('/api/exercise/new-user', function(req, res) {
   var username = req.body.username;
+  console.log('Make new user: ' + req.body.);
   if (!username) {
     res.json({
       'error': 'Username is invalid'
     });
+    return;
   }
-  var newUser = new User({
+  var newUser = new Users({
     name: username
   });
   newUser.save(function(err, createdUser) {
@@ -34,10 +36,36 @@ app.post('/api/exercise/new-user', function(req, res) {
       return console.error(err);
     }
     res.json({
-      'username': username
+      'username': username 'id': createdUser._id
     });
   });
-})
+});
+
+app.post('/api/exercise/add', function(req, res) {
+  var id = req.body.id;
+  var description = req.body.description;
+  var duration = req.body.duration;
+  var date = new Date(req.body.date) || new Date();
+  
+  var query = {
+    '_id': id
+  };
+  
+  var update = {
+    $push: {
+      'Exercises': {
+        description: description,
+        duration: duration,
+        date: date,
+      }
+    }
+  };
+
+  Users.findOneAndUpdate(query, update, function(err, doc) {
+    if (err) throw err;
+    req.json(doc);
+  });
+});
 
 app.listen(PORT, function(req, res) {
   console.log('listening on port ', PORT);
