@@ -18,7 +18,6 @@ app.get('/', function(req, res) {
 
 app.post('/api/exercise/new-user', function(req, res) {
   var username = req.body.username;
-  console.log('Make new user: ' + req.body.);
   if (!username) {
     res.json({
       'error': 'Username is invalid'
@@ -33,10 +32,11 @@ app.post('/api/exercise/new-user', function(req, res) {
       res.json({
         'error': 'Username invalid or already taken.'
       })
-      return console.error(err);
+      throw err;
     }
     res.json({
-      'username': username 'id': createdUser._id
+      'username': username,
+      'id': createdUser._id
     });
   });
 });
@@ -45,12 +45,12 @@ app.post('/api/exercise/add', function(req, res) {
   var id = req.body.id;
   var description = req.body.description;
   var duration = req.body.duration;
-  var date = new Date(req.body.date) || new Date();
-  
+  var date = new Date(req.body.date || Date.now());
+
   var query = {
     '_id': id
   };
-  
+
   var update = {
     $push: {
       'Exercises': {
@@ -62,8 +62,11 @@ app.post('/api/exercise/add', function(req, res) {
   };
 
   Users.findOneAndUpdate(query, update, function(err, doc) {
-    if (err) throw err;
-    req.json(doc);
+    if (err){ 
+      res.json({"error":"Invalid input"});
+      throw err;
+    }
+    res.json(doc);
   });
 });
 
