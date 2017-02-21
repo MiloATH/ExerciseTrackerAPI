@@ -2,12 +2,7 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var User = new Schema({
-    name: String,
-    Exercises: [{
-        description: String,
-        duration: Number,
-        date: Date,
-    }]
+    name: String
 });
 
 module.exports = mongoose.model('User', User);
