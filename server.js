@@ -1,6 +1,7 @@
 var express = require('express');
 var app = express();
 var Users = require('./app/models/users.js');
+var Exercises = require('./app/models/exercises.js');
 var PORT = process.env.PORT || 3000;
 
 var bodyParser = require('body-parser');
@@ -47,28 +48,64 @@ app.post('/api/exercise/add', function(req, res) {
   var duration = req.body.duration;
   var date = new Date(req.body.date || Date.now());
 
-  var query = {
-    '_id': id
-  };
-
-  var update = {
-    $push: {
-      'Exercises': {
-        description: description,
-        duration: duration,
-        date: date,
-      }
-    }
-  };
-
-  Users.findOneAndUpdate(query, update, function(err, doc) {
-    if (err){ 
-      res.json({"error":"Invalid input"});
+  var newExercise = new Exercises({
+    userId: id,
+    description: description,
+    duration: duration,
+    date: date,
+  });
+  newExercise.save(function(err, createdExercise) {
+    if (err) {
+      res.json({
+        'error': 'Username invalid or already taken.'
+      })
       throw err;
     }
-    res.json(doc);
+    res.json(createdExercise);
   });
 });
+
+
+app.get('/api/exercise/log', function(req, res) {
+  var id = req.query.userId;
+  var to = new Date(req.quey.to);
+  var from = new Date(req.query.from);
+  var limit = req.query.limit;
+  if (!id) {
+    res.json({
+      'error': 'Invalid id'
+    });
+    return;
+  }
+
+  var find = {
+    _id: id,
+    date: {
+      $lt: to == 'Invalid Date' ? Date.now() : to.getTime(),
+      $gt: from == 'Invalid Date' ? 0 : from.getTime()
+    }
+  };
+
+  var callback = function(err, result) {
+    if (err) {
+      throw err;
+      res.json({
+        'error': 'Could not find any.'
+      });
+    }
+    else {
+      res.json(result);
+    }
+  };
+
+  if (limit) {
+    Exercises.find(find).limit(limit).sort('-date').exec(callback);
+  }
+  else {
+    Exercises.find(find).sort('-date').exec(callback);
+  }
+
+})
 
 app.listen(PORT, function(req, res) {
   console.log('listening on port ', PORT);
