@@ -19,10 +19,17 @@
                 <input type="submit">
             </form>
             <form action="/api/exercise/add" method="post">
-                <input type="text" name="id" placeholder="id*">
+                <input type="text" name="userId" placeholder="userId*">
                 <input type="text" name="description" placeholder="description*">
                 <input type="text" name="duration" placeholder="duration*">
                 <input type="text" name="date" placeholder="date">
+                <input type="submit">
+            </form>
+            <form action="/api/exercise/log" method="get">
+                <input type="text" name="userId" placeholder="userId*">
+                <input type="text" name="from" placeholder="date from">
+                <input type="text" name="to" placeholder="date to">
+                <input type="text" name="limit" placeholder="limit results">
                 <input type="submit">
             </form>
         </div>

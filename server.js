@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise');
 
 app.get('/', function(req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
@@ -43,13 +43,13 @@ app.post('/api/exercise/new-user', function(req, res) {
 });
 
 app.post('/api/exercise/add', function(req, res) {
-  var id = req.body.id;
+  var userId = req.body.userId;
   var description = req.body.description;
   var duration = req.body.duration;
   var date = new Date(req.body.date || Date.now());
 
   var newExercise = new Exercises({
-    userId: id,
+    userId: userId,
     description: description,
     duration: duration,
     date: date,
@@ -68,7 +68,7 @@ app.post('/api/exercise/add', function(req, res) {
 
 app.get('/api/exercise/log', function(req, res) {
   var id = req.query.userId;
-  var to = new Date(req.quey.to);
+  var to = new Date(req.query.to);
   var from = new Date(req.query.from);
   var limit = req.query.limit;
   if (!id) {
@@ -78,8 +78,10 @@ app.get('/api/exercise/log', function(req, res) {
     return;
   }
 
+  //Find userId
+
   var find = {
-    _id: id,
+    userId: id,
     date: {
       $lt: to == 'Invalid Date' ? Date.now() : to.getTime(),
       $gt: from == 'Invalid Date' ? 0 : from.getTime()
