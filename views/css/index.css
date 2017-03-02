@@ -1,0 +1,14 @@
+body{
+    margin:5% auto auto auto;
+}
+
+.row{
+    border-radius:1rem;
+    background-color: #BBBFB0;
+    padding: 5px;
+    margin: 5px;
+    
+}
+
+.new-user{
+}

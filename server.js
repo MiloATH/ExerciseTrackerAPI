@@ -13,6 +13,8 @@ app.use(bodyParser.urlencoded({
 var mongoose = require('mongoose');
 mongoose.connect(process.env.MLAB_URI || 'mongodb://localhost/exercise');
 
+app.use(express.static('views'));
+
 app.get('/', function(req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
 });
