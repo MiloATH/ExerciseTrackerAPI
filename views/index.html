@@ -15,24 +15,29 @@
     <div class="container">
         <div class="row">
             <form action="/api/exercise/new-user" method="post">
-                <input type="text" name="username" placeholder="username*">
+                Username: <input type="text" name="username" placeholder="username*"><br>
                 <input type="submit">
             </form>
             <form action="/api/exercise/add" method="post">
-                <input type="text" name="userId" placeholder="userId*">
-                <input type="text" name="description" placeholder="description*">
-                <input type="text" name="duration" placeholder="duration*">
-                <input type="text" name="date" placeholder="date">
+                UserId: <input type="text" name="userId" placeholder="userId*"><br>
+                Description: <input type="text" name="description" placeholder="description*"><br>
+                Duration: <input type="text" name="duration" placeholder="duration*"><br>
+                Date: <input type="text" name="date" placeholder="date"><br>
                 <input type="submit">
             </form>
             <form action="/api/exercise/log" method="get">
-                <input type="text" name="userId" placeholder="userId*">
-                <input type="text" name="from" placeholder="date from">
-                <input type="text" name="to" placeholder="date to">
-                <input type="text" name="limit" placeholder="limit results">
+                UserId: <input type="text" name="userId" placeholder="userId*"><br>
+                After Date: <input type="text" name="from" placeholder="date from"><br>
+                Before Date: <input type="text" name="to" placeholder="date to"><br>
+                Limit Results: <input type="text" name="limit" placeholder="limit results"><br>
                 <input type="submit">
             </form>
         </div>
+        <footer>
+            <h5>
+                By Milo Hartsoe. <a href="https://github.com/MiloATH/ExerciseTrackerAPI">Code on Github here</a>.
+            </h5>
+        </footer>
     </div>
 </body>
 
