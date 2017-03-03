@@ -11,27 +11,41 @@
 <body>
     <div class="container">
         <h1>
-            Welcome to the exercise tracker api
+            Welcome to the Exercise Tracker API
         </h1>
         <div class="row new-user">
+            <h4>Create a new user</h4>
             <form action="/api/exercise/new-user" method="post">
                 Username: <input type="text" name="username" placeholder="username*"><br>
-                <input type="submit">
+                <input class="btn" type="submit">
             </form>
+            POST /api/exercise/new-user
         </div>
         <div class="row add">
+            <h4>Add an exercise</h4>
             <form action="/api/exercise/add" method="post">
-                UserId: <input type="text" name="userId" placeholder="userId*"><br> Description: <input type="text" name="description" placeholder="description*"><br> Duration: <input type="text" name="duration" placeholder="duration*"><br> Date:
+                UserId: <input type="text" name="userId" placeholder="userId*"><br>
+                Description: <input type="text" name="description" placeholder="description*"><br>
+                Duration: <input type="text" name="duration" placeholder="duration*"><br>
+                Date:
                 <input type="text" name="date" placeholder="date"><br>
-                <input type="submit">
+                <input class="btn" type="submit">
             </form>
+            POST /api/exercise/add
         </div>
         <div class="row log">
+            <h4>Access Log</h4>
             <form action="/api/exercise/log" method="get">
-                UserId: <input type="text" name="userId" placeholder="userId*"><br> After Date: <input type="text" name="from" placeholder="date from"><br> Before Date: <input type="text" name="to" placeholder="date to"><br> Limit Results: <input type="text"
+                UserId: <input type="text" name="userId" placeholder="userId*"><br>
+                After Date: <input type="text" name="from" placeholder="date from"><br>
+                Before Date: <input type="text" name="to" placeholder="date to"><br>
+                Limit Results: <input type="text"
                     name="limit" placeholder="limit results"><br>
-                <input type="submit">
+                <input class="btn" type="submit">
             </form>
+            GET /api/exercise/log?userId=&lt;userId&gt;<br>
+            OPTIONALS: &from=&lt;date-from&gt;&to=&lt;date-to&gt;&limit=&lt;limit&gt;
+            
         </div>
         <footer>
             <h5>
